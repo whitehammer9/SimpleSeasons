@@ -1,0 +1,17 @@
+name: SimpleSeasons
+main: net.whitehammer9.seasons.SeasonsPlugin
+version: 1.4.7
+api-version: '1.21'
+description: Original seasonal gameplay for Paper.
+authors: [Whitehammer9]
+softdepend: [ProtocolLib]
+commands:
+  seasons:
+    description: Manage and view world seasons.
+    aliases: [season]
+    usage: /seasons [info|set|next|enable|disable|reload]
+permissions:
+  seasons.use:
+    default: true
+  seasons.admin:
+    default: op

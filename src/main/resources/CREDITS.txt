@@ -1,0 +1,7 @@
+SimpleSeasons
+=============
+
+Created by Whitehammer9.
+
+This is an original clean-room Paper plugin. It contains no code, assets,
+configuration files, or branding copied from other plugins.

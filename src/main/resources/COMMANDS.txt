@@ -1,0 +1,57 @@
+SimpleSeasons command reference
+===============================
+
+First-time setup
+----------------
+
+As an operator, run this once for every world that should have seasons:
+
+/seasons enable [world]
+
+Example: /seasons enable world
+Leave [world] out when running the command in-game to use your current world.
+
+Commands
+--------
+
+/seasons or /season
+  Shows the season, season day, and transition status for your current world.
+  Permission: seasons.use
+
+/seasons info [world]
+  Shows the season, season day, and transition status for the selected world.
+  Permission: seasons.use
+
+/seasons set <spring|summer|fall|winter> [world]
+  Sets a world's current main season and resets its season day to 1.
+  Permission: seasons.admin
+
+/seasons next [world]
+  Immediately advances the selected world to its next main season.
+  Permission: seasons.admin
+
+/seasons enable [world]
+  Enables SimpleSeasons in a world. This is required before that world receives seasonal changes.
+  Permission: seasons.admin
+
+/seasons disable [world]
+  Stops seasonal changes in a world without deleting its saved season state.
+  Permission: seasons.admin
+
+/seasons reload
+  Reloads config.yml and all saved world season state.
+  Permission: seasons.admin
+
+Calendar settings
+-----------------
+
+season.days-per-season controls the number of Minecraft days in each main season.
+season.transition-days controls the number of in-between days between main seasons.
+Set transition-days to 0 to disable transitions.
+season.advance-on-sleep-only: true makes each completed night skip advance the calendar one day.
+
+Permissions
+-----------
+
+seasons.use   - Allowed for all players by default; permits /seasons and /season.
+seasons.admin - Allowed for operators by default; permits setup and management commands.

@@ -1,0 +1,109 @@
+season:
+  # Number of Minecraft days each main season lasts before a transition begins.
+  days-per-season: 14
+  # Number of in-between days after each main season. Set to 0 to disable transitions.
+  transition-days: 3
+  # Set false to keep the selected season until an administrator changes it.
+  automatic-advance: true
+  # When true, a completed multiplayer night skip advances the seasonal calendar by one day.
+  # When false, the calendar follows normal Minecraft day changes.
+  advance-on-sleep-only: true
+messages:
+  # Shown to players in a world when a completed sleep skip enters a new main season.
+  # Use <season> for the new season's display name.
+  season-entered: '&b[SimpleSeasons] &fYou now have entered &e<season>&f.'
+  setup-reminder:
+    # Reminds operators how to enable SimpleSeasons when they join an unconfigured world.
+    # Each operator sees it once per server session. Use <world> for the current world name.
+    enabled: true
+    text: '&e[SimpleSeasons] &fThis world is not set up yet. Type &b/seasons enable <world>&f to enable seasons here.'
+action-bar:
+  # Shows the current main season in the action bar above each player's hotbar.
+  enabled: true
+  # How often the action bar is refreshed, in ticks. 20 ticks is one second.
+  update-interval-ticks: 40
+  # Text displayed above the hotbar. Use <season> for Spring, Summer, Fall, or Winter.
+  message: '&bSeason: &e<season>'
+weather:
+  # How often, in server ticks, SimpleSeasons selects new weather for enabled worlds.
+  check-interval-ticks: 12000
+  chance:
+    # Percent chance that an enabled world has precipitation during spring.
+    spring: 45
+    # Percent chance that an enabled world has precipitation during summer.
+    summer: 25
+    # Percent chance that an enabled world has precipitation during fall.
+    fall: 50
+    # Percent chance that an enabled world has precipitation during winter.
+    winter: 60
+environment:
+  # Master switch for SimpleSeasons snow, water freezing, and thawing tasks.
+  enabled: true
+  # Number of chunks around each player checked for seasonal block changes. Lower values use less CPU.
+  scan-radius-chunks: 3
+  # During active winter snowfall, this many column groups are processed each second.
+  # Higher values cover nearby ground more quickly; 4 fills the area about four times faster than normal.
+  snow-scan-stages-per-pass: 4
+  # Allows snow layers to form on suitable surfaces during winter precipitation.
+  snow-in-winter: true
+  # Lets snow reach open ground beneath tree leaves while also leaving snow on the canopy.
+  snow-on-ground-under-trees: true
+  # Source water freezes throughout winter, even when it is not precipitating.
+  freeze-water-in-winter: true
+  # Seasonal snow and ice remain until the world leaves winter.
+  thaw-ice-outside-winter: true
+visuals:
+  # Enables Java-client seasonal colors through ProtocolLib. Disable if ProtocolLib is unavailable.
+  enabled: true
+  # Loaded chunks within this radius of players are refreshed after a main season change.
+  refresh-radius-chunks: 5
+  # Number of chunk refreshes sent per server tick. Lower values spread the visual update over more time.
+  refresh-chunks-per-tick: 3
+  # Faster refresh rate used immediately after a main-season change caused by sleeping.
+  season-change-chunks-per-tick: 12
+  # Java clients receive these vanilla biome palettes by season. This changes
+  # grass, leaves, water, fog, sky, and winter precipitation visually.
+  # Vanilla biome palette used for spring visuals.
+  spring-biome: PLAINS
+  # Vanilla biome palette used for summer visuals.
+  summer-biome: MUSHROOM_FIELDS
+  # Vanilla biome palette used for fall visuals.
+  fall-biome: DESERT
+  # Vanilla biome palette used for winter visuals.
+  winter-biome: SNOWY_TAIGA
+crops:
+  # Prevents normal crop-growth events during winter in enabled worlds.
+  pause-growth-in-winter: true
+effects:
+  # Master switch for SimpleSeasons player temperature effects.
+  enabled: true
+  # When true, temperature effects only apply where the player can see natural sky light.
+  # This prevents weather effects from applying underground, in caves, or in the Nether/End.
+  require-sky-exposure: true
+  winter:
+    # Applies slowness to unarmored players who are exposed to the winter weather.
+    unarmored-slowness: true
+    # Daytime potion strength: 0 is Slowness I, 1 is Slowness II, and so on.
+    slowness-amplifier: 0
+    # Nighttime potion strength. A value of 1 makes the cold stronger after dark.
+    night-slowness-amplifier: 1
+  summer:
+    # Applies nausea to exposed players wearing chainmail, iron, or diamond armor in summer.
+    hot-armor-nausea: true
+    # When true, summer heat only applies during the daytime and never overnight.
+    daytime-heat-only: true
+    # Potion strength: 0 is Nausea I, 1 is Nausea II, and so on.
+    nausea-amplifier: 0
+mobs:
+  # Percent chance that a natural spawn also creates one configured seasonal mob.
+  extra-spawn-chance-percent: 8
+  # Extra mob types that may spawn naturally during spring.
+  spring: [BEE, RABBIT]
+  # Extra mob types that may spawn naturally during summer.
+  summer: [PARROT, TURTLE]
+  # Extra mob types that may spawn naturally during fall.
+  fall: [FOX, WOLF]
+  # Extra mob types that may spawn naturally during winter.
+  winter: [RABBIT, POLAR_BEAR]
+# Per-world season state is written here automatically after running /seasons enable <world>.
+worlds: {}
