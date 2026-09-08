@@ -300,20 +300,16 @@ public final class SeasonsPlugin extends JavaPlugin implements Listener, Command
         for (Player player : Bukkit.getOnlinePlayers()) {
             WorldSeason state = worldSeasons.get(player.getWorld().getUID());
             if (state == null) continue;
-            if (getConfig().getBoolean("effects.require-sky-exposure", true) && !isExposedToSky(player)) continue;
+            String temperatureStatus = temperatureStatus(player, state);
+            if (temperatureStatus == null) continue;
             boolean daytime = isDaytime(player.getWorld());
-            if (state.season == Season.WINTER
-                    && getConfig().getBoolean("effects.winter.unarmored-slowness", true)
-                    && !wearingArmor(player)) {
+            if (temperatureStatus.equals("cold")) {
                 int amplifier = Math.max(0, getConfig().getInt(daytime
                         ? "effects.winter.slowness-amplifier"
                         : "effects.winter.night-slowness-amplifier", daytime ? 0 : 1));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, amplifier, true, false, true));
             }
-            if (state.season == Season.SUMMER
-                    && getConfig().getBoolean("effects.summer.hot-armor-nausea", true)
-                    && (!getConfig().getBoolean("effects.summer.daytime-heat-only", true) || daytime)
-                    && wearingHotArmor(player)) {
+            if (temperatureStatus.equals("hot")) {
                 int amplifier = Math.max(0, getConfig().getInt("effects.summer.nausea-amplifier", 0));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 80, amplifier, true, false, true));
             }
@@ -327,8 +323,30 @@ public final class SeasonsPlugin extends JavaPlugin implements Listener, Command
             WorldSeason state = worldSeasons.get(player.getWorld().getUID());
             if (state == null) continue;
             String message = color(template.replace("<season>", state.season.displayName()));
+            if (getConfig().getBoolean("action-bar.temperature-status.enabled", true)) {
+                String status = temperatureStatus(player, state);
+                if (status != null) {
+                    String path = status.equals("cold") ? "action-bar.temperature-status.cold-message"
+                            : "action-bar.temperature-status.hot-message";
+                    message += color(getConfig().getString(path,
+                            status.equals("cold") ? " &8| &bToo Cold" : " &8| &cToo Hot"));
+                }
+            }
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
         }
+    }
+
+    private String temperatureStatus(Player player, WorldSeason state) {
+        if (!getConfig().getBoolean("effects.enabled", true)) return null;
+        if (getConfig().getBoolean("effects.require-sky-exposure", true) && !isExposedToSky(player)) return null;
+        if (state.season == Season.WINTER
+                && getConfig().getBoolean("effects.winter.unarmored-slowness", true)
+                && !wearingArmor(player)) return "cold";
+        if (state.season == Season.SUMMER
+                && getConfig().getBoolean("effects.summer.hot-armor-nausea", true)
+                && (!getConfig().getBoolean("effects.summer.daytime-heat-only", true) || isDaytime(player.getWorld()))
+                && wearingHotArmor(player)) return "hot";
+        return null;
     }
 
     private boolean isExposedToSky(Player player) {

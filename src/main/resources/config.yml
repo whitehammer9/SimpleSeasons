@@ -24,6 +24,13 @@ action-bar:
   update-interval-ticks: 40
   # Text displayed above the hotbar. Use <season> for Spring, Summer, Fall, or Winter.
   message: '&bSeason: &e<season>'
+  temperature-status:
+    # Adds a heat or cold warning beside the season only while the matching player effect applies.
+    enabled: true
+    # Text shown to unarmored, outdoor players affected by winter cold.
+    cold-message: ' &8| &bToo Cold'
+    # Text shown to outdoor players affected by summer heat.
+    hot-message: ' &8| &cToo Hot'
 weather:
   # How often, in server ticks, SimpleSeasons selects new weather for enabled worlds.
   check-interval-ticks: 12000
